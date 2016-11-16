@@ -1,0 +1,94 @@
+<html>
+<head>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+ <form autocomplete="off" class="questions-form">
+
+                                        <div class="questions">
+                                            <div class="question" id="question-1" data-attr="1">      
+                                                Question 1: <input required name="q1" type="text" class="question1 form-control" placeholder="Enter Your Question">
+                                                    <h5>Answer Choice</h5>
+                                                    <div class="answers controls" id="answer-1">
+                                                        <input required maxlength='20' name="q1a1" id="question1ans1" type="text" placeholder="Enter an answer choice" class="form-control">
+                                                    </div> 
+                                                    <div class="buttons">
+                                                    <button type="button"  id="addanswer-1" data-value="1" class="add-answer btn btn-info btn-xs" value='Add Answer Choice'>Add Answer Choice</button>
+                                                    <button type="button" id="removeanswer-1" data-value="1" class="remove-answer btn btn-danger btn-xs" value='Remove Answer Choice'>Remove Answer Choice</button><br>
+                                              
+                                                 </div>
+                                            </div>
+                                       </div>
+                                        
+                                        <br>
+                                     
+                                   
+
+                                  <div class="pull-left">
+                                 <button type="button" class="btn btn-info btn-sm" id="addnewquestion"><i class="fa fa-plus"></i> Add Questions</button>        
+                                <button type="button" class="btn btn-danger btn-sm" id="removequestion"><i class="fa fa-minus"></i> Remove Question</button>   
+                                        </div>
+                                        <div class="pull-right">
+                                       <button type="submit" class="btn btn-default btn-md">Submit</button>          
+                                        </div>
+                                        </form>
+
+                                        <script type="text/javascript">  
+$(".questions-form").submit(function( event ) {
+    console.log( $( this ).serializeArray() );
+    event.preventDefault();
+});   
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+    $(document).on('click', '.add-answer', function(){
+    var q=$(this).attr('data-value');
+    var a=$('#answer-'+q).find(':input[type="text"]').length;
+    if(a>=4)
+    {
+    alert("Only 4 Choices are allowed");
+    return false;
+    }
+    a++;
+    var html='<br><input required maxlength="20" name="q'+q+'a'+a+'" id="question'+q+'ans'+a+'" type="text" placeholder="Enter an answer choice" class="answer form-control">';
+    $('#answer-'+q).append(html);
+    });
+    $(document).on('click', '.remove-answer', function(){
+        var q=$(this).attr('data-value');    
+        var a=$('#answer-'+q).find(':input[type="text"]').length;
+        if(a==1)
+        {
+        alert("1 Choice is compulsory");
+        return false;
+        }
+        $("#question"+q+"ans"+a).remove();
+    });
+    $("#addnewquestion").click(function () {
+    var q=$('.questions').find('.question').length;
+    q++;
+    var html='<br><div class="question" id="question-'+q+'">';
+        html+='Question '+q+': <input required name="q'+q+'" type="text" class="question'+q+' form-control" placeholder="Enter Your Question">';
+        html+='<h5>Answer Choice</h5><div class="answers controls" id="answer-'+q+'">';
+        html+='<input required maxlength="20" name="q'+q+'a1" id="question'+q+'ans1" type="text" placeholder="Enter an answer choice" class="form-control">';
+        html+='</div><div class="buttons"><button type="button" id="addanswer-'+q+'" data-value="'+q+'" class="add-answer btn btn-info btn-xs">Add Answer Choice</button>';
+        html+=' <button type="button" id="removeanswer-'+q+'" data-value="'+q+'" class="remove-answer btn btn-danger btn-xs">Remove Answer Choice</button></div></div>';                                                                
+    $('.questions').append(html);
+    });
+     $("#removequestion").click(function () {
+    var q=$('.questions').find('.question').length; 
+    if(q==1)
+        {
+        alert("1 Question is compulsory");
+        return false;
+        }                                                                  
+    $("#question-"+q).remove();
+
+    });
+    
+});
+</script>
+                                        </body>
+                                        </html>
